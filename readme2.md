@@ -1,5 +1,4 @@
-1. Aplikacje uruchamia sie n porcie 8090,
-2. Aplikacja ma 5 widoków nawigowalnych przyciskami:
+Aplikacje uruchamia sie n porcie 8090, Aplikacja ma 5 widoków nawigowalnych przyciskami:
 
 - do uzyskania kursu wybranej waluty (adres: /)
 - do przeliczenia podanej wartosci pieniedzy (Calculate) (ilosc i waluta) na wybrana walute, wynik bedzie podany w
@@ -10,5 +9,6 @@
 - do pokazania wszystkich dosttepnych kursow walut (allRates) klikajac na rzycisk bez podania dat w polach uzyskamy
   aktualne kursy walut a jesli podamy zakre dat to uzyskamy wartoci kursów z podanych dat
 - do pokazania wszytkich wczesniej dokonanych obliczn i ich wynikow, widok posiada paginacje
-
+- do wyswietlenia historii podanej waluty 7 dni wstecz 
+  
 Wszystkie wyniki zapisywane sa do bazy danych.

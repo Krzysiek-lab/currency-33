@@ -63,12 +63,12 @@ public class ViewControllers {
 
     @PostMapping("specificHistoricRate")
     public String getSpecificHistoricRate(Model model, @ModelAttribute("specificHistoric")
-    @Valid RatesHistoryViewModel RatesHistoryViewModel,
+    @Valid RatesViewModel RatesViewModel,
                                           BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
                 ratesHistory_interface.deleteAll();
-                currencyExchange_logic.currencyJsonHistory(RatesHistoryViewModel.getCode());///
+                currencyExchange_logic.currencyJsonHistory(RatesViewModel.getCode());///
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }

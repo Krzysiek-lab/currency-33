@@ -22,15 +22,13 @@
     </form>
     <table class="table table-bordered">
         <tr class="table-striped">
-            <th>Currency</th>
-            <th>Code</th>
+            <th>Effective date</th>
             <th>Bid</th>
             <th>Ask</th>
         </tr>
         <th:block th:each="one: ${specHist}">
             <tr>
                 <td th:text="${one.effectiveDate}"></td>
-                <td th:text="${one.no}"></td>
                 <td th:text="${one.bid}"></td>
                 <td th:text="${one.ask}"></td>
             </tr>
@@ -38,6 +36,7 @@
     </table>
     <hr>
     <a th:href="@{/}" class="btn btn-primary">Back to main site</a>
+    <br>
     <br>
     <a th:href="@{all}" class="btn btn-primary">Back to list of previously calculated</a>
     <br>

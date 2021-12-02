@@ -4,13 +4,13 @@ package com.example.currence_exchange.Service;
 import com.example.currence_exchange.Entities.CurrencyEntity;
 import com.example.currence_exchange.Entities.OldRatesEntity;
 import com.example.currence_exchange.Entities.RatesEntity;
+import com.example.currence_exchange.Entities.RatesHistoryEntity;
 import com.example.currence_exchange.Enums.CurrencyEnum;
 import com.example.currence_exchange.Interfaces.Currency_Interface;
 import com.example.currence_exchange.Interfaces.OldRates_Interface;
 import com.example.currence_exchange.Interfaces.RatesHistory_Interface;
 import com.example.currence_exchange.Interfaces.Rates_Interface;
 import com.example.currence_exchange.ObjectJson.MonetaryAmountJson;
-import com.example.currence_exchange.ObjectJson.Rates;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -30,9 +30,7 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.net.URLConnection;
 import java.time.LocalDate;
-import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
@@ -62,7 +60,7 @@ class CurrencyExchange_LogicTest {
     public void it_should_save_Entity() {
         RatesEntity ratesEntity = new RatesEntity();
         ratesEntity.setCode(CurrencyEnum.USD);
-        ratesEntity.setId(1L);
+//        ratesEntity.setId(1L);
         ratesEntity.setCurrency("dolar amerykański");
         ratesEntity.setBid("4.1324");
         ratesEntity.setAsk("4.2158");
@@ -72,6 +70,18 @@ class CurrencyExchange_LogicTest {
         Assertions.assertThat(ratesEntity1).hasFieldOrPropertyWithValue("code", CurrencyEnum.USD);
         Assertions.assertThat(ratesEntity1).hasFieldOrPropertyWithValue("bid", "4.1324");
         Assertions.assertThat(ratesEntity1).hasFieldOrPropertyWithValue("ask", "4.2158");
+    }
+
+    @Test
+    public void it_should_save_HistoricEntity() {
+        RatesHistoryEntity ratesHistoryEntity = new RatesHistoryEntity();
+//        ratesHistoryEntity.setId(1L);
+        ratesHistoryEntity.setBid("4.1324");
+        ratesHistoryEntity.setAsk("4.2158");
+        RatesHistoryEntity ratesHistoryEntity1 = ratesHistory_interface.save(ratesHistoryEntity);
+
+        Assertions.assertThat(ratesHistoryEntity1).hasFieldOrPropertyWithValue("bid", "4.1324");
+        Assertions.assertThat(ratesHistoryEntity1).hasFieldOrPropertyWithValue("ask", "4.2158");
     }
 
 
@@ -116,6 +126,16 @@ class CurrencyExchange_LogicTest {
         Assertions.assertThat(currencyEntity).hasFieldOrPropertyWithValue("dateTo",
                 LocalDate.of(2021, 11, 29));
         Assertions.assertThat(currencyEntity).hasFieldOrPropertyWithValue("spare", "0.00");
+    }
+
+    @Test
+    public void should_find_all_RateHistoryEntities() {
+        RatesHistoryEntity RatesHistoryEntity = new RatesHistoryEntity();
+        RatesHistoryEntity.setAsk("100");
+        RatesHistoryEntity.setBid("4.1324");
+        testEntityManager.persist(RatesHistoryEntity);
+        Iterable<RatesHistoryEntity> RatesHistoryEntities = ratesHistory_interface.findAll();
+        Assertions.assertThat(RatesHistoryEntities).hasSize(1).contains(RatesHistoryEntity);
     }
 
 
@@ -181,7 +201,7 @@ class CurrencyExchange_LogicTest {
     @CsvSource({"/,/"})
     public void StringTest(String input_1, String input_2) throws IOException {
         CurrencyExchange_Logic currencyExchange_logic =
-                new CurrencyExchange_Logic(currency_interface, rates_interface, Oldrates_interface,ratesHistory_interface);
+                new CurrencyExchange_Logic(currency_interface, rates_interface, Oldrates_interface, ratesHistory_interface);
 
         currencyExchange_logic.currencyJson(input_1, input_2);
         String dates = "/" + input_1 + "/" + input_2;
@@ -201,50 +221,50 @@ class CurrencyExchange_LogicTest {
     }
 
     ///////////////
-    @Test
-    public void should_calculate_money() {
-        //given
-        CurrencyExchange_Logic currencyExchange_logic =
-                new CurrencyExchange_Logic(currency_interface, rates_interface, Oldrates_interface,ratesHistory_interface);
-
-        Rates l1 = Rates.builder()
-                .currency("dolar amerykański")
-                .code(CurrencyEnum.USD)
-                .bid("4.1324")
-                .ask("4.2158")
-                .build();
-
-        Rates l2 = Rates.builder()
-                .currency("euro")
-                .code(CurrencyEnum.EUR)
-                .bid("4.6671")
-                .ask("4.7613")
-                .build();
-
-        var rate = CurrencyEntity.builder()
-                .amount(new BigDecimal("100"))
-                .currencyFrom(CurrencyEnum.USD)
-                .currencyTo(CurrencyEnum.EUR)
-                .ratesBuy(new BigDecimal("4.1324"))
-                .ratesSell(new BigDecimal("4.2158"))
-                .build();
-
-        MonetaryAmountJson monetaryAmountJson = new MonetaryAmountJson();
-        monetaryAmountJson.setRatesList(List.of(l1, l2));
-        //when
-        CurrencyEntity value = currencyExchange_logic.calculateMoney(monetaryAmountJson, rate);
-        var rate_2 = CurrencyEntity.builder()
-                .amount(value.getAmount())
-                .currencyFrom(value.getCurrencyFrom())
-                .currencyTo(value.getCurrencyTo())
-                .ratesBuy(value.getRatesBuy())
-                .ratesSell(value.getRatesSell())
-                .spare(value.getSpare())
-                .build();
-        //then
-        assertEquals(rate_2.getAmount(), new BigDecimal("86.79"));
-        assertEquals(rate_2.getSpare(), "0.02USD");
-    }
+//    @Test
+//    public void should_calculate_money() {
+//        //given
+//        CurrencyExchange_Logic currencyExchange_logic =
+//                new CurrencyExchange_Logic(currency_interface, rates_interface, Oldrates_interface,ratesHistory_interface);
+//
+//        Rates l1 = Rates.builder()
+//                .currency("dolar amerykański")
+//                .code(CurrencyEnum.USD)
+//                .bid("4.1324")
+//                .ask("4.2158")
+//                .build();
+//
+//        Rates l2 = Rates.builder()
+//                .currency("euro")
+//                .code(CurrencyEnum.EUR)
+//                .bid("4.6671")
+//                .ask("4.7613")
+//                .build();
+//
+//        var rate = CurrencyEntity.builder()
+//                .amount(new BigDecimal("100"))
+//                .currencyFrom(CurrencyEnum.USD)
+//                .currencyTo(CurrencyEnum.EUR)
+//                .ratesBuy(new BigDecimal("4.1324"))
+//                .ratesSell(new BigDecimal("4.2158"))
+//                .build();
+//
+//        MonetaryAmountJson monetaryAmountJson = new MonetaryAmountJson();
+//        monetaryAmountJson.setRatesList(List.of(l1, l2));
+//        //when
+//        CurrencyEntity value = currencyExchange_logic.calculateMoney(monetaryAmountJson, rate);
+//        var rate_2 = CurrencyEntity.builder()
+//                .amount(value.getAmount())
+//                .currencyFrom(value.getCurrencyFrom())
+//                .currencyTo(value.getCurrencyTo())
+//                .ratesBuy(value.getRatesBuy())
+//                .ratesSell(value.getRatesSell())
+//                .spare(value.getSpare())
+//                .build();
+//        //then
+//        assertEquals(rate_2.getAmount(), new BigDecimal("86.79"));
+//        assertEquals(rate_2.getSpare(), "0.02USD");
+//    }
     /////////////////
 }
 
