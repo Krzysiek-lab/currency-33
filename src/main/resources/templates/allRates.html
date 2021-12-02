@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Rates</title>
+    <link th:href="@{/static/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container">
+    <a>Rates from a given period of time: (not required, if you submit empty fields you will get actual rates) </a>
+    <form action="#" th:action="@{RatesOfPeriod}" th:object="${ratesOf}" method="POST">
+
+        <div th:if="${#fields.hasErrors('datesFrom')}" th:errors="*{datesFrom}">Invalid starting date</div>
+        <input type="text" th:field="*{datesFrom}" placeholder="YYY-MM-DD"
+               class="form-control mb-4 col-4">
+
+        <div th:if="${#fields.hasErrors('datesTo')}" th:errors="*{datesTo}">Invalid end date</div>
+        <input type="text" th:field="*{datesTo}" placeholder="YYY-MM-DD"
+               class="form-control mb-4 col-4">
+
+        <button type="submit" class="btn btn-info col-2">Submit</button>
+    </form>
+</div>
+<br>
+<thead>
+<tr>
+    <td>
+        <button id="przycisk1" class="btn btn-info">remove Currency</button>
+        <button id="przycisk2" class="btn btn-info">remove Code</button>
+        <button id="przycisk3" class="btn btn-info">remove Bid</button>
+        <button id="przycisk4" class="btn btn-info">remove Ask</button>
+        <br>
+        <button id="przycisk1b" class="btn btn-info">show Currency</button>
+        <button id="przycisk2b" class="btn btn-info">show Code</button>
+        <button id="przycisk3b" class="btn btn-info">show Bid</button>
+        <button id="przycisk4b" class="btn btn-info">show Ask</button>
+    </td>
+</tr>
+</thead>
+<br>
+<br>
+<table class="table table-bordered">
+    <tr class="table-striped">
+        <th>Currency</th>
+        <th>Code</th>
+        <th>Bid</th>
+        <th>Ask</th>
+    </tr>
+    <th:block th:each="singleRate: ${allRates}">
+        <tr class="del">
+            <td th:text="${singleRate.currency}"></td>
+            <td th:text="${singleRate.code}"></td>
+            <td th:text="${singleRate.bid}"></td>
+            <td th:text="${singleRate.ask}"></td>
+        </tr>
+    </th:block>
+</table>
+<a th:href="@{/}" class="btn btn-primary">Back to main site</a>
+</body>
+<!--///-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+ $( "#przycisk1" ).click(function() {
+      $('th:nth-child(1)').hide();
+      $('td:nth-child(1)').hide();
+    });
+});
+
+$(document).ready(function(){
+ $( "#przycisk2" ).click(function() {
+      $('th:nth-child(2)').hide();
+      $('td:nth-child(2)').hide();
+    });
+});
+
+$(document).ready(function(){
+ $( "#przycisk3" ).click(function() {
+      $('th:nth-child(3)').hide();
+      $('td:nth-child(3)').hide();
+    });
+});
+
+$(document).ready(function(){
+ $( "#przycisk4" ).click(function() {
+      $('th:nth-child(4)').hide();
+      $('td:nth-child(4)').hide();
+    });
+});
+
+$(document).ready(function(){
+ $( "#przycisk1b" ).click(function() {
+      $('th:nth-child(1)').show();
+      $('td:nth-child(1)').show();
+    });
+});
+
+$(document).ready(function(){
+ $( "#przycisk2b" ).click(function() {
+      $('th:nth-child(2)').show();
+      $('td:nth-child(2)').show();
+    });
+});
+
+$(document).ready(function(){
+ $( "#przycisk3b" ).click(function() {
+      $('th:nth-child(3)').show();
+      $('td:nth-child(3)').show();
+    });
+});
+
+$(document).ready(function(){
+ $( "#przycisk4b" ).click(function() {
+      $('th:nth-child(4)').show();
+      $('td:nth-child(4)').show();
+    });
+});
+
+
+</script>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculate</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container">
+    <h1>Find past rate for specific currency</h1>
+    <form action="#" th:action="@{specificHistoricRate}" th:object="${specificHistoric}" method="POST">
+        <div th:if="${#fields.hasErrors('code')}" th:errors="*{code}">Invalid code</div>
+        <div class="control-group">
+            <label class="control-label">Find rates for currency:</label>
+            <select th:field="*{code}">
+                <option th:each="i : ${T(com.example.currence_exchange.Enums.CurrencyEnum).values()}"
+                        th:value="${i}"
+                        th:text="${i}"></option>
+            </select>
+            <button type="submit" class="btn btn-info col-2">Find</button>
+        </div>
+    </form>
+    <table class="table table-bordered">
+        <tr class="table-striped">
+            <th>Currency</th>
+            <th>Code</th>
+            <th>Bid</th>
+            <th>Ask</th>
+        </tr>
+        <th:block th:each="one: ${specHist}">
+            <tr>
+                <td th:text="${one.effectiveDate}"></td>
+                <td th:text="${one.no}"></td>
+                <td th:text="${one.bid}"></td>
+                <td th:text="${one.ask}"></td>
+            </tr>
+        </th:block>
+    </table>
+    <hr>
+    <a th:href="@{/}" class="btn btn-primary">Back to main site</a>
+    <br>
+    <a th:href="@{all}" class="btn btn-primary">Back to list of previously calculated</a>
+    <br>
+    <br>
+    <a th:href="@{Calculation}" class="btn btn-primary">Back to Calculation site</a>
+    <br>
+    <br>
+    <a th:href="@{AllRates}" class="btn btn-primary">Back to site of all current rates or old rates</a>
+</div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</html>

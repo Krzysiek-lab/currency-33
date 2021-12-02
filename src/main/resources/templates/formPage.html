@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculate</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container">
+    <h1>Calculate</h1>
+
+    <form action="#" th:action="@{Calculate}" th:object="${currencyAndAmount}" method="POST">
+        <div th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">Invalid amount</div>
+        <input type="text" th:field="*{amount}" placeholder="Amount" class="form-control mb-4 col-4">
+
+        <a>Calculate monetary amount using rates from a given period of time: (not required) </a>
+        <div th:if="${#fields.hasErrors('dateFrom')}" th:errors="*{dateFrom}">Invalid starting date</div>
+        <input type="text" th:field="*{dateFrom}" placeholder="YYY-MM-DD"
+               class="form-control mb-4 col-4">
+
+        <div th:if="${#fields.hasErrors('dateTo')}" th:errors="*{dateTo}">Invalid end date</div>
+        <input type="text" th:field="*{dateTo}" placeholder="YYY-MM-DD"
+               class="form-control mb-4 col-4">
+
+        <div th:if="${#fields.hasErrors('CurrencyEnumFrom')}" th:errors="*{CurrencyEnum}">Invalid Currency</div>
+        <div class="control-group">
+            <label class="control-label">Currency From</label>
+            <select th:field="*{CurrencyEnumFrom}">
+                <option th:each="i : ${T(com.example.currence_exchange.Enums.CurrencyEnum).values()}"
+                        th:value="${i}"
+                        th:text="${i}"></option>
+            </select>
+        </div>
+
+        <div th:if="${#fields.hasErrors('CurrencyEnumTo')}" th:errors="*{CurrencyEnum}">Invalid Currency</div>
+        <div class="control-group">
+            <label class="control-label">Currency To</label>
+            <select th:field="*{CurrencyEnumTo}">
+                <option th:each="i : ${T(com.example.currence_exchange.Enums.CurrencyEnum).values()}"
+                        th:value="${i}"
+                        th:text="${i}"></option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-info col-2">Calculate</button>
+    </form>
+    <br>
+    <hr>
+    <a th:href="@{all}" class="btn btn-primary">Back to list of previously calculated</a>
+    <br>
+    <br>
+    <a th:href="@{/}" class="btn btn-primary">Back to main</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All</title>
+    <link th:href="@{/static/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"/>
+</head>
+<body>
+<!--tu poczatek-->
+<table class="table table-bordered">
+    <thead>
+    <tr>
+    <tr class="table-striped">
+        <th>Amount</th>
+        <th>Buy</th>
+        <th>Sell</th>
+        <th>Spare</th>
+        <th>From Currency</th>
+        <th>To Currency</th>
+        <th>Date from</th>
+        <th>Date to</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="rat, iStat : ${all.content}"
+        th:style="${iStat.odd}? 'font-weight: bold;'"
+        th:alt-title="${iStat.even}? 'even' : 'odd'">
+        <td th:text="${rat.amount}"></td>
+        <td th:text="${rat.ratesBuy}"></td>
+        <td th:text="${rat.ratesSell}"></td>
+        <td th:text="${rat.spare}"></td>
+        <td th:text="${rat.currencyFrom}"></td>
+        <td th:text="${rat.currencyTo}"></td>
+        <td th:text="${rat.dateFrom}"></td>
+        <td th:text="${rat.dateTo}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<div style="display: inline" th:if="${all.totalPages > 0}" class="pagination"
+     th:each="pageNumber : ${pageNumbers}">
+    <a th:href="@{/all(size=${all.size}, page=${pageNumber})}"
+       th:text=${pageNumber}
+       th:class="${pageNumber==all.number + 1} ? active"></a>
+</div>
+<!--tu koniec-->
+<br>
+<a th:href="@{/}" class="btn btn-primary">Back to main site</a>
+<br>
+<br>
+<a th:href="@{Calculation}" class="btn btn-primary">Back to calculation site</a>
+<br>
+<br>
+<a th:href="@{AllRates}" class="btn btn-primary">Back to site of all current rates or old rates</a>
+</body>
+</html>
