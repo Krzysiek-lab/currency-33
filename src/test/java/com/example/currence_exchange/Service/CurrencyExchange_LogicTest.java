@@ -201,22 +201,10 @@ class CurrencyExchange_LogicTest {
     @CsvSource({"/,/"})
     public void StringTest(String input_1, String input_2) throws IOException {
         CurrencyExchange_Logic currencyExchange_logic =
-                new CurrencyExchange_Logic(currency_interface, rates_interface, Oldrates_interface, ratesHistory_interface);
+                new CurrencyExchange_Logic(currency_interface, rates_interface, Oldrates_interface,
+                        ratesHistory_interface);
 
-        currencyExchange_logic.currencyJson(input_1, input_2);
-        String dates = "/" + input_1 + "/" + input_2;
-        URL url = new URL("http://api.nbp.pl/api/exchangerates/tables/c" + dates);
-        URLConnection urlConnection = url.openConnection();
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-        StringBuilder jsonObject = new StringBuilder();
-        String line;
-        while ((line = bufferedReader.readLine()) != null) {
-            jsonObject.append(line);
-        }
-        bufferedReader.close();
-        ObjectMapper objectMapper = new ObjectMapper();
-        MonetaryAmountJson val = objectMapper.readValue(String.valueOf(jsonObject.deleteCharAt(0)
-                .deleteCharAt(jsonObject.length() - 1)), MonetaryAmountJson.class);
+     var val = currencyExchange_logic.currencyJson(input_1, input_2);
         assertNotNull(val);
     }
 
