@@ -244,7 +244,11 @@ public class CurrencyExchange_Logic implements LogicInterface {
             val_5 = val_4.multiply(new BigDecimal(two.bid));
             val_6 = val_5.multiply(new BigDecimal(one.ask)).setScale(2, RoundingMode.DOWN); // rezta w pierwszej walucie
         }
-        return jsonObToCurrencyEntity(one, two, val_3, val_6, start, end);
+        if (start == null && end == null) {
+            return jsonObToCurrencyEntity(one, two, val_3, val_6, "", "");
+        } else {
+            return jsonObToCurrencyEntity(one, two, val_3, val_6, start, end);
+        }
     }
 
     @Override
