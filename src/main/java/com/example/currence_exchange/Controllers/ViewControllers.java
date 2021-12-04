@@ -49,7 +49,7 @@ public class ViewControllers {
                 Oldrates_interface.deleteAll();
                 rates_interface.deleteAll();
                 currencyExchange_logic.currencyJson("", "");
-                currencyExchange_logic.currencyJsonHistory(ratesViewModel.getCode());///
+                currencyExchange_logic.currencyJsonHistory(ratesViewModel.getCode());
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
@@ -84,7 +84,6 @@ public class ViewControllers {
 
         Page<CurrencyEntity> ratePage = currencyExchange_logic.pagination(PageRequest.of(page - 1, size));
         model.addAttribute("all", ratePage);
-
         int totalPages = ratePage.getTotalPages();
         if (totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
@@ -164,5 +163,4 @@ public class ViewControllers {
         }
     }
 
-// TODO: 29.11.2021 napisac testy i ZREFAKTOROWAC
 }

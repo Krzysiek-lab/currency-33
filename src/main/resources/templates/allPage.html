@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"/>
 </head>
 <body>
-<!--tu poczatek-->
 <table class="table table-bordered">
     <thead>
     <tr>
@@ -37,14 +36,12 @@
     </tr>
     </tbody>
 </table>
-
 <div style="display: inline" th:if="${all.totalPages > 0}" class="pagination"
      th:each="pageNumber : ${pageNumbers}">
     <a th:href="@{/all(size=${all.size}, page=${pageNumber})}"
        th:text=${pageNumber}
        th:class="${pageNumber==all.number + 1} ? active"></a>
 </div>
-<!--tu koniec-->
 <br>
 <a th:href="@{/}" class="btn btn-primary">Back to main site</a>
 <br>

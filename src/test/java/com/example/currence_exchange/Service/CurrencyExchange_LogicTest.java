@@ -13,6 +13,7 @@ import com.example.currence_exchange.Interfaces.Rates_Interface;
 import com.example.currence_exchange.ObjectJson.MonetaryAmountJson;
 import com.example.currence_exchange.ObjectJson.Rates;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -53,6 +54,35 @@ class CurrencyExchange_LogicTest {
     @Autowired
     RatesHistory_Interface ratesHistory_interface;
 
+    Rates l1, l2;
+    CurrencyEntity rate;
+
+
+    @BeforeEach
+    void setUp() {
+        l1 = Rates.builder()
+                .currency("dolar amerykański")
+                .code(CurrencyEnum.USD)
+                .bid("4.1324")
+                .ask("4.2158")
+                .build();
+
+        l2 = Rates.builder()
+                .currency("euro")
+                .code(CurrencyEnum.EUR)
+                .bid("4.6671")
+                .ask("4.7613")
+                .build();
+
+        rate = CurrencyEntity.builder()
+                .amount(new BigDecimal("100"))
+                .currencyFrom(CurrencyEnum.USD)
+                .currencyTo(CurrencyEnum.EUR)
+                .ratesBuy(new BigDecimal("4.1324"))
+                .ratesSell(new BigDecimal("4.2158"))
+                .build();
+    }
+
 
     @Test
     public void it_should_save_Entity() {
@@ -69,6 +99,7 @@ class CurrencyExchange_LogicTest {
         Assertions.assertThat(ratesEntity1).hasFieldOrPropertyWithValue("bid", "4.1324");
         Assertions.assertThat(ratesEntity1).hasFieldOrPropertyWithValue("ask", "4.2158");
     }
+
 
     @Test
     public void it_should_save_HistoricEntity() {
@@ -115,8 +146,10 @@ class CurrencyExchange_LogicTest {
         CurrencyEntity currencyEntity = currency_interface.save(CurrencyEntity);
 
         Assertions.assertThat(currencyEntity).hasFieldOrPropertyWithValue("amount", new BigDecimal("100"));
-        Assertions.assertThat(currencyEntity).hasFieldOrPropertyWithValue("ratesBuy", new BigDecimal("4.1324"));
-        Assertions.assertThat(currencyEntity).hasFieldOrPropertyWithValue("ratesSell", new BigDecimal("4.2158"));
+        Assertions.assertThat(currencyEntity).hasFieldOrPropertyWithValue("ratesBuy",
+                new BigDecimal("4.1324"));
+        Assertions.assertThat(currencyEntity).hasFieldOrPropertyWithValue("ratesSell",
+                new BigDecimal("4.2158"));
         Assertions.assertThat(currencyEntity).hasFieldOrPropertyWithValue("currencyFrom", CurrencyEnum.USD);
         Assertions.assertThat(currencyEntity).hasFieldOrPropertyWithValue("currencyTo", CurrencyEnum.EUR);
         Assertions.assertThat(currencyEntity).hasFieldOrPropertyWithValue("dateFrom",
@@ -213,29 +246,6 @@ class CurrencyExchange_LogicTest {
         CurrencyExchange_Logic currencyExchange_logic =
                 new CurrencyExchange_Logic(currency_interface, rates_interface, Oldrates_interface,
                         ratesHistory_interface);
-
-        Rates l1 = Rates.builder()
-                .currency("dolar amerykański")
-                .code(CurrencyEnum.USD)
-                .bid("4.1324")
-                .ask("4.2158")
-                .build();
-
-        Rates l2 = Rates.builder()
-                .currency("euro")
-                .code(CurrencyEnum.EUR)
-                .bid("4.6671")
-                .ask("4.7613")
-                .build();
-
-        var rate = CurrencyEntity.builder()
-                .amount(new BigDecimal("100"))
-                .currencyFrom(CurrencyEnum.USD)
-                .currencyTo(CurrencyEnum.EUR)
-                .ratesBuy(new BigDecimal("4.1324"))
-                .ratesSell(new BigDecimal("4.2158"))
-                .build();
-
         MonetaryAmountJson monetaryAmountJson = new MonetaryAmountJson();
         monetaryAmountJson.setRatesList(List.of(l1, l2));
         //when

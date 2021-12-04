@@ -6,9 +6,9 @@ Aplikacje uruchamia sie n porcie 8090, Aplikacja ma 5 widoków nawigowalnych prz
   przeliczenia sa wykonane na podstawie aktualnych kursow walut jednak mozna wykonac przeliczenia na podstawie starszych
   kursow jesli w pola dateFrom i DateTo poda sie zakres dat z ktorych chce sie uzyskac wartosci kursow przeliczyc wynik
   ,o przycisnieciu przucisku calculate skierowani zostaniemy na strone z wynikiem
-- do pokazania wszystkich dosttepnych kursow walut (allRates) klikajac na rzycisk bez podania dat w polach uzyskamy
-  aktualne kursy walut a jesli podamy zakre dat to uzyskamy wartoci kursów z podanych dat
-- do pokazania wszytkich wczesniej dokonanych obliczn i ich wynikow, widok posiada paginacje
-- do wyswietlenia historii podanej waluty 7 dni wstecz 
-  
+- do pokazania wszystkich dosttepnych kursow walut (allRates) klikajac na przycisk bez podania dat w polach uzyskamy
+  aktualne kursy walut a jesli podamy zakres dat to uzyskamy wartosci kursów z podanych dat
+- do pokazania wszytkich wczesniej dokonanych obliczen i ich wynikow, widok posiada paginacje
+- do wyswietlenia historii podanej waluty 7 dni wstecz
+
 Wszystkie wyniki zapisywane sa do bazy danych.

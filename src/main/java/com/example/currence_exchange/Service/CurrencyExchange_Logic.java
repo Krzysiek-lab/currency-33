@@ -193,7 +193,6 @@ public class CurrencyExchange_Logic implements LogicInterface {
                 .getCurrencyTo())).collect(Collectors.toList());
 
         Rates one, two;
-
         if (listFirst.size() != 0) {
             one = listFirst.get(0);
         } else {
@@ -213,15 +212,13 @@ public class CurrencyExchange_Logic implements LogicInterface {
                     .bid("1")
                     .code(CurrencyEnum.PLN)
                     .build();
-
         }
 
         BigDecimal am, val_1, val_2, val_3, val_4, val_5, val_6;
-
         if (two.code.toString().equals("PLN") && !one.code.toString().equals("PLN")) {
             am = new BigDecimal(String.valueOf(currencyEntity.getAmount()));
             val_4 = new BigDecimal(one.bid).multiply(am);// w pln
-            val_3 = new BigDecimal(val_4.toString()).setScale(2, RoundingMode.DOWN);// calosc
+            val_3 = new BigDecimal(val_4.toString()).setScale(2, RoundingMode.DOWN);
             val_6 = val_4.subtract(val_3).setScale(2, RoundingMode.DOWN);
         } else if (two.code.toString().equals("PLN") && one.code.toString().equals("PLN")) {
             am = new BigDecimal(String.valueOf(currencyEntity.getAmount()));
@@ -242,7 +239,7 @@ public class CurrencyExchange_Logic implements LogicInterface {
             val_3 = new BigDecimal(val_2.toString()).setScale(2, RoundingMode.DOWN);
             val_4 = val_2.subtract(val_3);
             val_5 = val_4.multiply(new BigDecimal(two.bid));
-            val_6 = val_5.multiply(new BigDecimal(one.ask)).setScale(2, RoundingMode.DOWN); // rezta w pierwszej walucie
+            val_6 = val_5.multiply(new BigDecimal(one.ask)).setScale(2, RoundingMode.DOWN);
         }
         if (start == null && end == null) {
             return jsonObToCurrencyEntity(one, two, val_3, val_6, "", "");

@@ -34,7 +34,7 @@ public interface LogicInterface {
 
     List<OldRatesEntity> OldRatesJsonToRatesEntity(List<Rates> ratesList);
 
-    public List<RatesHistoryEntity> RatesHistoryJsonToRatesHistoryEntity(List<RatesHistory> ratesList);
+    List<RatesHistoryEntity> RatesHistoryJsonToRatesHistoryEntity(List<RatesHistory> ratesList);
 
     List<RatesEntity> RatesJsonToRatesEntity(List<Rates> ratesList);
 
