@@ -88,7 +88,6 @@ class CurrencyExchange_LogicTest {
     public void it_should_save_Entity() {
         RatesEntity ratesEntity = new RatesEntity();
         ratesEntity.setCode(CurrencyEnum.USD);
-//        ratesEntity.setId(1L);
         ratesEntity.setCurrency("dolar amerykański");
         ratesEntity.setBid("4.1324");
         ratesEntity.setAsk("4.2158");
@@ -104,7 +103,6 @@ class CurrencyExchange_LogicTest {
     @Test
     public void it_should_save_HistoricEntity() {
         RatesHistoryEntity ratesHistoryEntity = new RatesHistoryEntity();
-//        ratesHistoryEntity.setId(1L);
         ratesHistoryEntity.setBid("4.1324");
         ratesHistoryEntity.setAsk("4.2158");
         RatesHistoryEntity ratesHistoryEntity1 = ratesHistory_interface.save(ratesHistoryEntity);
