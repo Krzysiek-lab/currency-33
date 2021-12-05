@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -241,7 +242,7 @@ public class CurrencyExchange_Logic implements LogicInterface {
             val_5 = val_4.multiply(new BigDecimal(two.bid));
             val_6 = val_5.multiply(new BigDecimal(one.ask)).setScale(2, RoundingMode.DOWN);
         }
-        if (start == null && end == null) {
+        if (start == null || end == null) {
             return jsonObToCurrencyEntity(one, two, val_3, val_6, "", "");
         } else {
             return jsonObToCurrencyEntity(one, two, val_3, val_6, start, end);
@@ -278,6 +279,13 @@ public class CurrencyExchange_Logic implements LogicInterface {
             currency_interface.save(currencyEntity);
         }
         return currencyEntity;
+    }
+
+    @Override
+    @Scheduled(cron = "0 0 1 * * MON")
+    public void schedule() {
+        rates_interface.deleteAll();
+        Oldrates_interface.deleteAll();
     }
 
     @Override

@@ -43,4 +43,6 @@ public interface LogicInterface {
     CurrencyEntity jsonObToCurrencyEntity(Rates rates, Rates rates_two,
                                           BigDecimal amount, BigDecimal spare, String start, String end);
 
+    void schedule();
+
 }
