@@ -15,19 +15,11 @@ Wszystkie wyniki zapisywane sa do bazy danych.
 
 
 To run this application using docker you need to:
-
 docker pull docker pull ignatiuk/currency-33:baza
-
 docker pull docker pull ignatiuk/currency-33:curr
-
-docker run -p 3307:3306 --name currency -e MYSQL_PASSWORD=ZADD -td ignatiuk/currency-33:baza (where "ZADD" is a password for an user in the mySQL database and "currency" is the name we give to a container)
-
+docker run -p 3307:3306 --name currency -e MYSQL_ROOT_PASSWORD=ZADD -td ignatiuk/currency-33:baza (where "ZADD" is a password for an user in the mySQL database and "currency" is the name we give to a container)
 docker exec -it currency bash
-
-psql -U mysql
-
+mysql -U root ZADD
 CREATE DATABASE currency; (steps 3-5 creating a database in ignatiuk/currency-33:baza container)
-
 docker run -p 8090:8090 -d ignatiuk/currency-33:curr
-
 application is now available at http://localhost:8090/all
