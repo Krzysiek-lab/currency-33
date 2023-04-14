@@ -17,4 +17,3 @@ Wszystkie wyniki zapisywane sa do bazy danych.
 To run this application using docker you need to:
 - docker pull docker pull ignatiuk/currency-33:baza
 - docker pull docker pull ignatiuk/currency-33:curr
-
